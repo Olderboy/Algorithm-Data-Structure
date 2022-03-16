@@ -19,7 +19,7 @@ typedef struct state {
 }state;
 
 int n, m;
-char sx, sy;
+int sx, sy;
 char map[max_n + 5][max_n + 5], check[max_n + 5][max_n + 5];
 int dir[4][2] = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
 
@@ -58,7 +58,8 @@ int main() {
                 return 0;
             }
         }
+
     }
-    printf("no");
+    printf("No");
     return 0;
 }
