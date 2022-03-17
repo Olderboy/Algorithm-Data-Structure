@@ -18,8 +18,13 @@ using namespace std;
 int n, m, l, r;
 int tree[MAX_N + 5];
 
-bool check() {
-    for (int i = 0)
+bool check(int s) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        if (tree[i] < s) continue;
+        if ((sum += tree[i] - s) > m) return 1;
+    }
+    return 0;
 }
 
 int binary_an() {
@@ -30,7 +35,7 @@ int main() {
     cin >> n >> m;
     for (int i = 0; i < n; i++) {
         cin >> tree[i];
-        r = max(tree[i], r)
+        r = max(tree[i], r);
     }
     cout << binary_an();
     return 0;
