@@ -22,13 +22,22 @@ bool check(int s) {
     int sum = 0;
     for (int i = 0; i < n; i++) {
         if (tree[i] < s) continue;
-        if ((sum += tree[i] - s) > m) return 1;
+        if ((sum += tree[i] - s) >= m) return 1;
     }
     return 0;
 }
 
 int binary_an() {
-
+    l = 0;
+    while (l < r) {
+        int mid = (l + r + 1) / 2;
+        if (check(mid)) {
+            l = mid;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return l;
 }
 
 int main() {
