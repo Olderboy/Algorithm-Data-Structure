@@ -11,7 +11,7 @@
 ​ 对于每个询问，输出一个整数表示答案。
 */
 #include <iostream>
-#include <string>
+#include <cstring>
 #include <vector>
 using namespace std;
 
@@ -23,7 +23,7 @@ public:
         }
         _f = 0;
     }
-    
+    //插入新节点
     Node *insert(char c) {
         // cout << (next[c - 'a'] == nullptr) << endl;
         if (next[c - 'a'] == nullptr) {
@@ -33,11 +33,13 @@ public:
             return next[c - 'a'];
         }
     }
+    //查询下一个节点
     Node *Next(char c) {
         return next[c - 'a'];
     }
+    //设置标志位，标志到这个节点有一个字符串结束
     void setf() {
-        this->_f = 1;
+        this->_f += 1;
     }
     int getf() {
         return _f;
@@ -59,22 +61,24 @@ public:
     DirctTree() {
         root = new Node;
     }
-    void insert(const string& s) {
+    //直接插入一个字符串
+    void insert(char* s) {
         Node *temp = root;
-        for (int i = 0; i < s.size(); i++) {
+        for (int i = 0; i < strlen(s); i++) {
             temp = temp->insert(s[i]);
-            cout << temp << endl;
+            // cout << temp << endl;
         }
         temp->setf();
     }
-    int check(const string& s) {
+    int check(char* s) {
         int count = 0;
         Node *temp = root;
-        for (int i = 0; i < s.size(); i++) {
+        if (temp == nullptr) return 0;
+        for (int i = 0; i < strlen(s); i++) {
             temp = temp->Next(s[i]);
-            if (temp == nullptr) count;
+            if (temp == nullptr) return count;
             else {
-                if (temp->getf()) count++;
+                count += temp->getf();
             }
         }
         return count;
@@ -84,6 +88,7 @@ public:
         for (int i = 0; i < 26; i++) {
             Node *temp = root->Next(i + 'a');
             if (temp != nullptr) s += (i + 'a');
+            if (temp == nullptr) continue;
             else if (temp->getf()) cout << s << endl;
         }
     }
@@ -93,21 +98,24 @@ public:
 private:
     Node *root;
 };
+const int MAX_N = 10^6;
 
 int main() {
     DirctTree dt;
     int n, m;
     cin >> n >> m;
     for (int i = 0; i < n; i++) {
-        string s;
-        cin >> s;
+        char s[MAX_N + 5];
+        scanf("%s", s);
+        getchar();
         dt.insert(s);
     }
-    dt.output();
+    // dt.output();
     for (int i = 0; i < m; i++) {
-        string s;
-        cin >> s;
-        cout << dt.check(s) << endl;
+        char s[MAX_N + 5];
+        scanf("%s", s);
+        getchar();
+        printf("%d\n", dt.check(s));
     }
     return 0;
 }
