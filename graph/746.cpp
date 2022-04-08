@@ -11,11 +11,8 @@
 ​ 输出共 n 行，每行一个数字 ai，表示从起点到 i 点的最短路权值，若某点不可达输出 −1，答案保证在 int 范围内。
 */
 
-//djsk算法
 #include <iostream>
-#include <stdio.h>
 #include <queue>
-#include <vector>
 #include <cstring>
 using namespace std;
 
@@ -27,22 +24,21 @@ struct edge {
 
 struct state{
     int p, vsum;
-    bool operator< (const state& s1) const {
-        return vsum > s1.vsum;
+    bool operator< (const state& s) const {
+        return vsum > s.vsum;
     }
 };
 
-// class StateCompare{
-// public:
-//     StateCompare() = default;
-//     bool operator()(const state& s1, const state& s2) {
-//         return s1.vsum < s2.vsum;
-//     }
-// };
+class StateCompare{
+public:
+    StateCompare() = default;
+    bool operator()(const state& s1, const state& s2) {
+        return s1.vsum < s2.vsum;
+    }
+};
 
 edge edg[2 * MAX_N + 5];
-int n, m, s, cnt = 1, head[MAX_N], ans[MAX_N];
-priority_queue<state> que;
+int n, m, s, cnt, head[2 * MAX_N + 5], ans[2 * MAX_N + 5];
 
 void dummpEdge(int a, int b, int c) {
     edg[cnt].e = b;
@@ -54,26 +50,27 @@ void dummpEdge(int a, int b, int c) {
 
 int main() {
     scanf("%d%d%d", &n, &m, &s);
-    memset(head, -1, MAX_N);
-    memset(ans, 0x3f, MAX_N);
+    memset(head, -1, MAX_N + 5);
+    memset(ans, 0x3f, MAX_N + 5);
     for (int i = 0; i < m; i++) {
         int a, b, c;
         scanf("%d%d%d", &a, &b, &c);
         dummpEdge(a, b, c);
         dummpEdge(b, a, c);
     }
+
+    priority_queue<state> que;
     que.push(state{s, 0});
     ans[s] = 0;
     while (!que.empty()) {
         state temp = que.top();
         que.pop();
-        if (temp.vsum != ans[temp.p]) {
-            continue;
-        }
+        if (ans[temp.p] != temp.vsum) continue;
         for (int i = head[temp.p]; i != -1; i = edg[i].next) {
-            if (ans[edg[i].e] > temp.vsum + edg[i].v) {
-                ans[edg[i].e] = temp.vsum + edg[i].v;
-                que.push((state){edg[i].e, temp.vsum + edg[i].v});
+            int e = edg[i].e, v = edg[i].v;
+            if (ans[e] > temp.vsum + v) {
+                ans[e] = temp.vsum + v;
+                que.push((state){e, ans[e]});
             }
         }
     }
