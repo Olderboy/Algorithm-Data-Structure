@@ -1,6 +1,8 @@
 #include <iostream>
 #include <queue>
 #include <string>
+#include <map>
+#include <unordered_map>
 using namespace std;
 
 // namespace test1 {
@@ -96,27 +98,40 @@ namespace test3
 namespace test4
 {
     priority_queue<int, vector<int>, less<int>> que;    
-    que.push(10);
 } // namespace test4
 
+namespace test5 {
+    int main(){
 
+        map<string, int> m;
+        m.insert(make_pair("1", 1));
+        m.insert(make_pair("2", 2));
+        map<string, int>::iterator iter = m.end();
+        m.insert(iter, make_pair("4", 4));
+        m.insert(iter, make_pair("3", 3));
+        for (auto i : m) {
+            cout << i.first << ", " << i.second << endl;
+        }
+    }
+}
 
 int main() {
     // test1::main();
     // test2::main();
     // test3::main();
-    string s("sfsafda");
-    string d(s);
-    cout << d << endl;
-    vector<vector<int>> vec;
-    vec.push_back(vector<int>{1, 2, 3, 4});
-    vector<vector<int>> vec2;
-    vec2 = vec;
-    vector<int> temp = vec2[0];
-    for(int i : temp) {
-        cout << i << endl;
-    }
-    cout << __FILE__ << sizeof(__FILE__) << endl;
+    // string s("sfsafda");
+    // string d(s);
+    // cout << d << endl;
+    // vector<vector<int>> vec;
+    // vec.push_back(vector<int>{1, 2, 3, 4});
+    // vector<vector<int>> vec2;
+    // vec2 = vec;
+    // vector<int> temp = vec2[0];
+    // for(int i : temp) {
+    //     cout << i << endl;
+    // }
+    // cout << __FILE__ << sizeof(__FILE__) << endl;
+    test5::main();
     return 0;
 }
 

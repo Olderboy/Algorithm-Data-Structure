@@ -30,6 +30,11 @@ int top(priority_queue *pq) {
     return pq->data[1];
 }
 
+bool empty(priority_queue* pq) {
+    if (pq == NULL) return true;
+    return pq->cnt == 0;
+}
+
 int push(priority_queue *pq, int val) {
     if (pq == NULL) return 0;
     if (pq->cnt == pq->size) return 0;
@@ -49,9 +54,9 @@ int pop(priority_queue *pq) {
     while ((ind << 1) < pq->cnt) {
         int temp = ind, l = ind << 1, r = ind << 1 | 1;
         if (pq->data[l] > pq->data[temp]) temp = l;
-        if (r <= q->cnt && q->data[r] > q->data[temp]) temp = r;
+        if (r <= pq->cnt && pq->data[r] > pq->data[temp]) temp = r;
         if (temp == ind) break;
-        swap(q->data[ind], q->data[temp]);
+        swap(pq->data[ind], pq->data[temp]);
     }
     return 1;
 }

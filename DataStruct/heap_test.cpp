@@ -18,6 +18,21 @@ private:
     int _x, _y;
 };
 
+bool operator<(const Point &p1, const Point &p2)
+{
+    if (_x == p._x)
+    {
+        //大顶堆
+        // return _y < p._y;
+        //小顶堆
+        return _y > p._y;
+    }
+    //大顶堆
+    // return _x < p._x;
+    //小顶堆
+    return _x > p._x;
+}
+
 priority_queue<int, vector<int>, greater<int>> pq;
 pq.push(10);
 #define swap(a, b) {\
